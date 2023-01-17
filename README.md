@@ -1,8 +1,8 @@
-# PROJECT_NAME
+# ring-lib
 
-PROJECT_DESCRIPTION
+Opinionated implementations for Clojure ring handler.
 
-[![cljdoc badge](https://cljdoc.org/badge/com.github.strojure/PROJECT_NAME)](https://cljdoc.org/d/com.github.strojure/PROJECT_NAME)
-[![Clojars Project](https://img.shields.io/clojars/v/com.github.strojure/PROJECT_NAME.svg)](https://clojars.org/com.github.strojure/PROJECT_NAME)
+[![cljdoc badge](https://cljdoc.org/badge/com.github.strojure/ring-lib)](https://cljdoc.org/d/com.github.strojure/ring-lib)
+[![Clojars Project](https://img.shields.io/clojars/v/com.github.strojure/ring-lib.svg)](https://clojars.org/com.github.strojure/ring-lib)
 
 ## Motivation
