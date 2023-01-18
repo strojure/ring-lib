@@ -3,8 +3,13 @@
   :url "https://github.com/strojure/ring-lib"
   :license {:name "The MIT License" :url "http://opensource.org/licenses/MIT"}
 
-  :dependencies []
+  :dependencies [;; Delayed values in maps
+                 [com.github.strojure/zmap "1.2.8"]
+                 ;; Request utils from undertow
+                 [io.undertow/undertow-core "2.3.0.Final"]]
 
-  :profiles {:provided {:dependencies [[org.clojure/clojure "1.11.1"]]}}
+  :profiles {:provided {:dependencies [[org.clojure/clojure "1.11.1"]]}
+             :dev,,,,, {:dependencies [[ring/ring-defaults "0.3.4"]]
+                        :source-paths ["doc"]}}
 
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo" :sign-releases false}]])
