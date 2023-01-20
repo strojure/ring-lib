@@ -6,36 +6,25 @@
            (java.util StringTokenizer)))
 
 (set! *warn-on-reflection* true)
-
-;;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-
-(defn url-decode
-  "Decodes the supplied www-form-urlencoded string using UTF-8 charset.
-  Returns `s` if decoding failed."
-  {:added "1.0"}
-  [^String s]
-  (try
-    (URLDecoder/decode s StandardCharsets/UTF_8)
-    (catch IllegalArgumentException _
-      s)))
+(set! *unchecked-math* :warn-on-boxed)
 
 ;;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 (defn reduce-param-token
   "Adds param token string `s` into `result` using reducing function
   `(fn [result key value] new-result)`, where `s` is a URL encoded key/value
-  pair like `key=value`."
+  pair like `key=value`. Raise exception if UTF-8 decode fails."
   {:added "1.0"}
   [rf result ^String s]
   (let [i (.indexOf s (unchecked-int #=(int \=)))]
     (cond
       (pos? i)
-      (-> result (rf (url-decode (.substring s 0 i))
-                     (url-decode (.substring s (inc i)))))
+      (-> result (rf (URLDecoder/decode (.substring s (unchecked-int 0) i) StandardCharsets/UTF_8)
+                     (URLDecoder/decode (.substring s (unchecked-inc-int i)) StandardCharsets/UTF_8)))
       (zero? i)
-      (-> result (rf "" (url-decode (.substring s (inc i)))))
+      (-> result (rf "" (URLDecoder/decode (.substring s (unchecked-inc-int i)) StandardCharsets/UTF_8)))
       :else
-      (-> result (rf (url-decode s) "")))))
+      (-> result (rf (URLDecoder/decode s StandardCharsets/UTF_8) "")))))
 
 (defn array-suffix-name
   "Default implementation of `:array-name-fn` in [[assoc-param-fn]]. Returns
