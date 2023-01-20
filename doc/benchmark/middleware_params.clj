@@ -16,11 +16,12 @@
 
 (-> {:request-method :get :query-string "q=1"}
     (impl-params))
-#_{:request-method :get,
-   :query-string "q=1",
-   :query-params {"q" "1"},
-   :uri-params {"q" "1"},
-   :form-params {"q" "1"}}
+:=>
+{:request-method :get,
+ :query-string "q=1",
+ :query-params {"q" "1"},
+ :uri-params {"q" "1"},
+ :form-params {"q" "1"}}
 ;             Execution time mean : 250,869665 ns
 ;    Execution time std-deviation : 30,807845 ns
 ;   Execution time lower quantile : 219,180040 ns ( 2,5%)
@@ -28,11 +29,12 @@
 
 (-> {:request-method :get :query-string "q=1"}
     (ring-params))
-#_{:request-method :get,
-   :query-string "q=1",
-   :form-params {},
-   :params {"q" "1"},
-   :query-params {"q" "1"}}
+:=>
+{:request-method :get,
+ :query-string "q=1",
+ :form-params {},
+ :params {"q" "1"},
+ :query-params {"q" "1"}}
 ;             Execution time mean : 599,129221 ns
 ;    Execution time std-deviation : 12,944601 ns
 ;   Execution time lower quantile : 584,852419 ns ( 2,5%)
@@ -66,12 +68,13 @@
      :headers {"content-type" "application/x-www-form-urlencoded"}
      :body (ByteArrayInputStream. (.getBytes "f=1"))}
     (impl-params))
-#_{:request-method :post,
-   :query-string "q=1",
-   :headers {"content-type" "application/x-www-form-urlencoded"},
-   :query-params {"q" "1"},
-   :uri-params {"q" "1"},
-   :form-params {"f" "1"}}
+:=>
+{:request-method :post,
+ :query-string "q=1",
+ :headers {"content-type" "application/x-www-form-urlencoded"},
+ :query-params {"q" "1"},
+ :uri-params {"q" "1"},
+ :form-params {"f" "1"}}
 ;             Execution time mean : 380,589550 ns
 ;    Execution time std-deviation : 34,356178 ns
 ;   Execution time lower quantile : 343,336534 ns ( 2,5%)
