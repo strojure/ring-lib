@@ -20,8 +20,8 @@
 {:request-method :get,
  :query-string "q=1",
  :query-params {"q" "1"},
- :url-params {"q" "1"},
- :form-params {"q" "1"}}
+ :form-params {"q" "1"},
+ :url-params {"q" "1"}}
 ;             Execution time mean : 250,869665 ns
 ;    Execution time std-deviation : 30,807845 ns
 ;   Execution time lower quantile : 219,180040 ns ( 2,5%)
@@ -72,10 +72,10 @@
 {:request-method :post,
  :query-string "q=1",
  :headers {"content-type" "application/x-www-form-urlencoded"},
- :query-params {"q" "1"},
- :url-params {"q" "1"},
  :body-params {"f" "1"},
- :form-params {"f" "1"}}
+ :form-params {"f" "1"},
+ :query-params {"q" "1"},
+ :url-params {"q" "1"}}
 ;             Execution time mean : 380,589550 ns
 ;    Execution time std-deviation : 34,356178 ns
 ;   Execution time lower quantile : 343,336534 ns ( 2,5%)
@@ -106,7 +106,7 @@
      :headers {"content-type" "application/x-www-form-urlencoded"}
      :body (ByteArrayInputStream. (.getBytes "f=1"))}
     (impl-params)
-    (select-keys [:query-params :form-params]))
+    (select-keys [:query-params :body-params]))
 ;             Execution time mean : 1,205899 µs
 ;    Execution time std-deviation : 87,360964 ns
 ;   Execution time lower quantile : 1,127964 µs ( 2,5%)

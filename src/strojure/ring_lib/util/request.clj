@@ -48,6 +48,16 @@
   ;Execution time mean : 20,732401 ns
   )
 
+(defn content-type-charset*
+  "Returns instance of `Charset` for charset in `Content-Type` request header.
+  Throws `java.nio.charset.UnsupportedCharsetException` for invalid charset
+  names."
+  {:tag Charset :added "1.0"}
+  [header]
+  (some-> header
+          (Headers/extractQuotedValueFromHeader "charset")
+          (Charset/forName)))
+
 (defn content-type-charset
   "Returns instance of `Charset` for charset in `Content-Type` request header.
   Throws `java.nio.charset.UnsupportedCharsetException` for invalid charset
@@ -55,8 +65,7 @@
   {:tag Charset :added "1.0"}
   [request]
   (some-> (content-type-header request)
-          (Headers/extractQuotedValueFromHeader "charset")
-          (Charset/forName)))
+          (content-type-charset*)))
 
 (comment
 
