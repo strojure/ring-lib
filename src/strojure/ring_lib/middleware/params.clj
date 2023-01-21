@@ -1,6 +1,7 @@
 (ns strojure.ring-lib.middleware.params
   "Ring middleware to add params keys in request."
   (:require [strojure.ring-lib.util.codec :as codec]
+            [strojure.ring-lib.util.header :as header]
             [strojure.ring-lib.util.io :as io]
             [strojure.ring-lib.util.perf :as perf]
             [strojure.ring-lib.util.request :as request]
@@ -35,12 +36,13 @@
             (when-let [query-string (get request :query-string)]
               (zmap/delay (form-decode query-string)))
             body-params-delay
-            (when-let [body (and (request/form-urlencoded? request)
-                                 (get request :body))]
-              (let [content-type (request/content-type-header request)]
-                (zmap/delay
-                  (-> body (io/read-all-bytes (request/content-type-charset* content-type))
-                      (form-decode)))))]
+            (when (request/method-post? request)
+              (when-let [content-type (request/content-type request)]
+                (when (header/form-urlencoded? content-type)
+                  (when-let [body (get request :body)]
+                    (zmap/delay
+                      (-> body (io/read-all-bytes (header/extract-charset content-type))
+                          (form-decode)))))))]
         (if (or query-params-delay body-params-delay)
           (zmap/with-map [m request]
             (cond-> m
