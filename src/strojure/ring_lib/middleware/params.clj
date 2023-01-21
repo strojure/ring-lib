@@ -22,16 +22,12 @@
   {:added "1.0"}
   [form-decode-fn]
   (fn [request]
-    (when request
-      (if-let [query-string (request :query-string)]
-        (let [query-params-delay (zmap/delay (form-decode-fn query-string))]
-          (-> request
-              (assoc :query-params query-params-delay)
-              (assoc :uri-params (zmap/delay
-                                   (perf/merge* (request :uri-params)
-                                                (.deref ^IDeref query-params-delay))))
-              (zmap/wrap)))
-        request))))
+    (if-let [query-string (get request :query-string)]
+      (let [query-params-delay (zmap/delay (form-decode-fn query-string))]
+        (-> request
+            (assoc :query-params query-params-delay)
+            (zmap/update :uri-params #(perf/merge* % (.deref ^IDeref query-params-delay)))))
+      request)))
 
 (defn- form-params-request-fn
   "Adds delayed keys in request:
@@ -44,27 +40,26 @@
   {:added "1.0"}
   [form-decode-fn]
   (fn [request]
-    (when request
-      (cond
-        ;; GET request - use value of `:query-params`.
-        (and (request/method-get? request)
-             (.containsKey ^Associative request :query-params))
-        (-> request
-            (assoc :form-params (zmap/delay (request :query-params)))
-            (zmap/wrap))
-        ;; POST request with `application/x-www-form-urlencoded` content — read
-        ;; params from request `:body`.
-        (request/form-urlencoded? request)
-        (-> request
-            (dissoc :body)
-            (assoc :form-params (zmap/delay
-                                  (some-> (request :body)
-                                          (io/read-all-bytes (request/content-type-charset request))
-                                          (form-decode-fn))))
-            (zmap/wrap))
-        ;; Don't add `:form-params` key.
-        :else
-        request))))
+    (cond
+      ;; GET request - use value of `:query-params`.
+      (request/method-get? request)
+      (if (.containsKey ^Associative request :query-params)
+        (zmap/with-map [m request]
+          (assoc m :form-params (get m :query-params)))
+        request)
+      ;; POST request with `application/x-www-form-urlencoded` content — read
+      ;; params from request `:body`.
+      (request/form-urlencoded? request)
+      (if-let [body (get request :body)]
+        (zmap/with-map [m request]
+          (-> m (dissoc :body)
+              (assoc :form-params (zmap/delay
+                                    (-> body (io/read-all-bytes (request/content-type-charset request))
+                                        (form-decode-fn))))))
+        request)
+      ;; Don't add `:form-params` key.
+      :else
+      request)))
 
 ;;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
