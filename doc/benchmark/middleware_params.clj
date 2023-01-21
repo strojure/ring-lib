@@ -74,6 +74,7 @@
  :headers {"content-type" "application/x-www-form-urlencoded"},
  :query-params {"q" "1"},
  :url-params {"q" "1"},
+ :body-params {"f" "1"},
  :form-params {"f" "1"}}
 ;             Execution time mean : 380,589550 ns
 ;    Execution time std-deviation : 34,356178 ns

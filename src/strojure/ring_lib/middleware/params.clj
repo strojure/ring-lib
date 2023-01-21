@@ -52,10 +52,12 @@
       (request/form-urlencoded? request)
       (if-let [body (get request :body)]
         (zmap/with-map [m request]
-          (-> m (dissoc :body)
-              (assoc :form-params (zmap/delay
+          (let [body-params-delay (zmap/delay
                                     (-> body (io/read-all-bytes (request/content-type-charset request))
-                                        (form-decode-fn))))))
+                                        (form-decode-fn)))]
+            (-> m (dissoc :body)
+                (assoc :body-params body-params-delay)
+                (assoc :form-params body-params-delay))))
         request)
       ;; Don't add `:form-params` key.
       :else
@@ -67,6 +69,9 @@
   "Adds delayed keys in request:
 
   - `:query-params` – a map of params from query string.
+
+  - `:body-params`  – a map of body params for POST request with
+                      `application/x-www-form-urlencoded` content.
 
   - `:url-params`   – a map of URL params (path params + query params) with
                       merged query params in.
