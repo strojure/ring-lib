@@ -16,7 +16,7 @@
 
   - `:query-params` – a map of params from query string.
 
-  - `:uri-params` – a map of URI params (path params + query params) with merged
+  - `:url-params` – a map of URI params (path params + query params) with merged
                     query params in.
   "
   {:added "1.0"}
@@ -26,7 +26,7 @@
       (let [query-params-delay (zmap/delay (form-decode-fn query-string))]
         (-> request
             (assoc :query-params query-params-delay)
-            (zmap/update :uri-params #(perf/merge* % (.deref ^IDeref query-params-delay)))))
+            (zmap/update :url-params #(perf/merge* % (.deref ^IDeref query-params-delay)))))
       request)))
 
 (defn- form-params-request-fn
@@ -68,8 +68,8 @@
 
   - `:query-params` – a map of params from query string.
 
-  - `:uri-params`   – a map of URI params (path params + query params) with merged
-                      query params in.
+  - `:url-params`   – a map of URL params (path params + query params) with
+                      merged query params in.
 
   - `:form-params`  – a map of form params.
       - Query params for GET request.

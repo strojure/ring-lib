@@ -20,7 +20,7 @@
 {:request-method :get,
  :query-string "q=1",
  :query-params {"q" "1"},
- :uri-params {"q" "1"},
+ :url-params {"q" "1"},
  :form-params {"q" "1"}}
 ;             Execution time mean : 250,869665 ns
 ;    Execution time std-deviation : 30,807845 ns
@@ -73,7 +73,7 @@
  :query-string "q=1",
  :headers {"content-type" "application/x-www-form-urlencoded"},
  :query-params {"q" "1"},
- :uri-params {"q" "1"},
+ :url-params {"q" "1"},
  :form-params {"f" "1"}}
 ;             Execution time mean : 380,589550 ns
 ;    Execution time std-deviation : 34,356178 ns
