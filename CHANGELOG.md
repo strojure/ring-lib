@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## `1.0.13-SNAPSHOT`
+## `1.0.18-SNAPSHOT`
 
 Release date `UNRELEASED`
+
+## `1.0.17-beta2`
+
+Release date `2023-01-31`
 
 - Rename `:url-params` to `:path-or-query-params`.
 
