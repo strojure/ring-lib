@@ -6,7 +6,7 @@
             [strojure.ring-lib.util.perf :as perf]
             [strojure.ring-lib.util.request :as request]
             [strojure.zmap.core :as zmap])
-  (:import (clojure.lang IDeref)))
+  (:import (clojure.lang Associative IDeref)))
 
 (set! *warn-on-reflection* true)
 
@@ -32,30 +32,31 @@
   {:added "1.0"}
   [opts]
   (let [form-decode (codec/form-decode-fn opts)]
-    (fn [request]
-      (let [query-params-delay
-            (when-let [query-string (get request :query-string)]
-              (zmap/delay (form-decode query-string)))
-            body-params-delay
-            (when (request/method-post? request)
-              (when-let [content-type (request/content-type request)]
-                (when (header/form-urlencoded? content-type)
-                  (when-let [body (get request :body)]
-                    (zmap/delay
-                      (-> body (io/read-all-bytes (header/extract-charset content-type))
-                          (form-decode)))))))]
-        (if (or query-params-delay body-params-delay)
-          (zmap/with-map [m request]
-            (cond-> m
-              query-params-delay
-              (-> (assoc :query-params query-params-delay)
-                  (cond-> (request/method-get? m)
-                          (assoc :form-params query-params-delay))
-                  (zmap/update :path-or-query-params #(perf/merge* (.deref ^IDeref query-params-delay) %)))
+    (fn [^Associative request]
+      (when request
+        (let [query-params-delay
+              (when-let [query-string (.valAt request :query-string)]
+                (zmap/delay (form-decode query-string)))
               body-params-delay
-              (-> (dissoc :body)
-                  (assoc :body-params body-params-delay)
-                  (assoc :form-params body-params-delay))))
-          request)))))
+              (when (request/method-post? request)
+                (when-let [content-type (request/content-type request)]
+                  (when (header/form-urlencoded? content-type)
+                    (when-let [body (.valAt request :body)]
+                      (zmap/delay
+                        (-> body (io/read-all-bytes (header/extract-charset content-type))
+                            (form-decode)))))))]
+          (if (or query-params-delay body-params-delay)
+            (zmap/with-map [m request]
+              (cond-> m
+                query-params-delay
+                (-> (assoc :query-params query-params-delay)
+                    (cond-> (request/method-get? m)
+                            (assoc :form-params query-params-delay))
+                    (zmap/update :path-or-query-params #(perf/merge* (.deref ^IDeref query-params-delay) %)))
+                body-params-delay
+                (-> (dissoc :body)
+                    (assoc :body-params body-params-delay)
+                    (assoc :form-params body-params-delay))))
+            request))))))
 
 ;;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
