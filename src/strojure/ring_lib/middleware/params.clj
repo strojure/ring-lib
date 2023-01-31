@@ -21,8 +21,9 @@
       + Only in POST request with `application/x-www-form-urlencoded` content
         type.
 
-  - `:url-params` – a map of URL params (path params + query params).
+  - `:path-or-query-params` – a map of URL params (path params + query params).
       + This middleware merges query params in URL params.
+      + Prefers path params over query params.
 
   - `:form-params` – a map of params of HTML forms in GET/POST request.
       - In GET request same as `:query-params`.
@@ -50,7 +51,7 @@
               (-> (assoc :query-params query-params-delay)
                   (cond-> (request/method-get? m)
                           (assoc :form-params query-params-delay))
-                  (zmap/update :url-params #(perf/merge* % (.deref ^IDeref query-params-delay))))
+                  (zmap/update :path-or-query-params #(perf/merge* (.deref ^IDeref query-params-delay) %)))
               body-params-delay
               (-> (dissoc :body)
                   (assoc :body-params body-params-delay)

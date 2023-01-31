@@ -21,7 +21,7 @@
  :query-string "q=1",
  :query-params {"q" "1"},
  :form-params {"q" "1"},
- :url-params {"q" "1"}}
+ :path-or-query-params {"q" "1"}}
 ;             Execution time mean : 250,869665 ns
 ;    Execution time std-deviation : 30,807845 ns
 ;   Execution time lower quantile : 219,180040 ns ( 2,5%)
@@ -75,7 +75,7 @@
  :body-params {"f" "1"},
  :form-params {"f" "1"},
  :query-params {"q" "1"},
- :url-params {"q" "1"}}
+ :path-or-query-params {"q" "1"}}
 ;             Execution time mean : 380,589550 ns
 ;    Execution time std-deviation : 34,356178 ns
 ;   Execution time lower quantile : 343,336534 ns ( 2,5%)

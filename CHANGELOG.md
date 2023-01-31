@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Release date `UNRELEASED`
 
-- 
+- Rename `:url-params` to `:path-or-query-params`.
 
 ## `1.0.12-beta1`
 
