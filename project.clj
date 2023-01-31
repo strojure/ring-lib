@@ -4,7 +4,7 @@
   :license {:name "The MIT License" :url "http://opensource.org/licenses/MIT"}
 
   :dependencies [;; Delayed values in maps
-                 [com.github.strojure/zmap "1.2.15"]
+                 [com.github.strojure/zmap "1.3.18"]
                  ;; Request utils from undertow
                  [io.undertow/undertow-core "2.3.0.Final"]]
 

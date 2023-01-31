@@ -46,15 +46,15 @@
         (if (or query-params-delay body-params-delay)
           (zmap/with-map [m request]
             (cond-> m
-              body-params-delay
-              (-> (dissoc :body)
-                  (assoc :body-params body-params-delay)
-                  (assoc :form-params body-params-delay))
               query-params-delay
               (-> (assoc :query-params query-params-delay)
                   (cond-> (request/method-get? m)
                           (assoc :form-params query-params-delay))
-                  (zmap/update :url-params #(perf/merge* % (.deref ^IDeref query-params-delay))))))
+                  (zmap/update :url-params #(perf/merge* % (.deref ^IDeref query-params-delay))))
+              body-params-delay
+              (-> (dissoc :body)
+                  (assoc :body-params body-params-delay)
+                  (assoc :form-params body-params-delay))))
           request)))))
 
 ;;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
