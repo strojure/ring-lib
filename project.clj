@@ -1,4 +1,4 @@
-(defproject com.github.strojure/ring-lib "1.0.17-beta2"
+(defproject com.github.strojure/ring-lib "1.0.18-SNAPSHOT"
   :description "Opinionated implementations for Clojure ring handler."
   :url "https://github.com/strojure/ring-lib"
   :license {:name "The MIT License" :url "http://opensource.org/licenses/MIT"}
