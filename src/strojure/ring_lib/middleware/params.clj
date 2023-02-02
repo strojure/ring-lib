@@ -18,8 +18,7 @@
   - `:query-params` – a map of params from query string.
 
   - `:body-params` – a map of body params.
-      + Only in POST request with `application/x-www-form-urlencoded` content
-        type.
+      + Only in request with `application/x-www-form-urlencoded` content type.
 
   - `:path-or-query-params` – a map of URL params (path params + query params).
       + This middleware merges query params in URL params.
@@ -34,29 +33,28 @@
   (let [form-decode (codec/form-decode-fn opts)]
     (fn [^Associative request]
       (when request
-        (let [query-params-delay
-              (when-let [query-string (.valAt request :query-string)]
-                (zmap/delay (form-decode query-string)))
-              body-params-delay
-              (when (request/method-post? request)
-                (when-let [content-type (request/content-type request)]
-                  (when (header/form-urlencoded? content-type)
-                    (when-let [body (.valAt request :body)]
-                      (zmap/delay
-                        (-> body (io/read-all-bytes (header/extract-charset content-type))
-                            (form-decode)))))))]
-          (if (or query-params-delay body-params-delay)
-            (zmap/with-map [m request]
-              (cond-> m
-                query-params-delay
-                (-> (assoc :query-params query-params-delay)
-                    (cond-> (request/method-get? m)
-                            (assoc :form-params query-params-delay))
-                    (zmap/update :path-or-query-params #(perf/merge* (.deref ^IDeref query-params-delay) %)))
-                body-params-delay
-                (-> (dissoc :body)
-                    (assoc :body-params body-params-delay)
-                    (assoc :form-params body-params-delay))))
+        (let [query-params (when-let [query-string (.valAt request :query-string)]
+                             (zmap/delay (form-decode query-string)))
+              body-params (when-let [content-type (request/content-type request)]
+                            (when (header/form-urlencoded? content-type)
+                              (when-let [body (.valAt request :body)]
+                                (zmap/delay
+                                  (-> body (io/read-all-bytes (header/extract-charset content-type))
+                                      (form-decode))))))]
+          (if (or query-params body-params)
+            (let [request-method (.valAt request :request-method)]
+              (zmap/with-map [m request]
+                (cond-> m
+                  query-params
+                  (-> (assoc :query-params query-params)
+                      (cond-> (.equals :get request-method)
+                              (assoc :form-params query-params))
+                      (zmap/update :path-or-query-params #(perf/merge* (.deref ^IDeref query-params) %)))
+                  body-params
+                  (-> (dissoc :body)
+                      (assoc :body-params body-params)
+                      (cond-> (.equals :post request-method)
+                              (assoc :form-params query-params))))))
             request))))))
 
 ;;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

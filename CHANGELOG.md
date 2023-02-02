@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Release date `UNRELEASED`
 
+- Add `:body-params` in non-POST request.
+
 ## `1.0.17-beta2`
 
 Release date `2023-01-31`
