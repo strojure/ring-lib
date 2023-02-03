@@ -22,10 +22,10 @@
  :query-params {"q" "1"},
  :form-params {"q" "1"},
  :path-or-query-params {"q" "1"}}
-;             Execution time mean : 212.587392 ns
-;    Execution time std-deviation : 16.448955 ns
-;   Execution time lower quantile : 198.148389 ns ( 2.5%)
-;   Execution time upper quantile : 231.934333 ns (97.5%)
+;             Execution time mean : 217.785660 ns
+;    Execution time std-deviation : 14.516993 ns
+;   Execution time lower quantile : 203.612957 ns ( 2.5%)
+;   Execution time upper quantile : 237.043257 ns (97.5%)
 
 (-> {:request-method :get :query-string "q=1"}
     (ring-params))
@@ -47,10 +47,10 @@
 (-> {:request-method :get :query-string "q=1"}
     (impl-params)
     :query-params)
-;             Execution time mean : 326.618344 ns
-;    Execution time std-deviation : 23.205939 ns
-;   Execution time lower quantile : 310.829047 ns ( 2.5%)
-;   Execution time upper quantile : 364.956925 ns (97.5%)
+;             Execution time mean : 357.655923 ns
+;    Execution time std-deviation : 25.678788 ns
+;   Execution time lower quantile : 332.332038 ns ( 2.5%)
+;   Execution time upper quantile : 395.295261 ns (97.5%)
 
 (-> {:request-method :get :query-string "q=1"}
     (ring-params)
@@ -75,11 +75,11 @@
  :query-params {"q" "1"},
  :path-or-query-params {"q" "1"},
  :body-params {"f" "1"},
- :form-params {"q" "1"}}
-;             Execution time mean : 500.711220 ns
-;    Execution time std-deviation : 28.070796 ns
-;   Execution time lower quantile : 478.613095 ns ( 2.5%)
-;   Execution time upper quantile : 539.363277 ns (97.5%)
+ :form-params {"f" "1"}}
+;             Execution time mean : 506.940050 ns
+;    Execution time std-deviation : 23.565473 ns
+;   Execution time lower quantile : 489.896429 ns ( 2.5%)
+;   Execution time upper quantile : 540.559665 ns (97.5%)
 
 (-> {:request-method :post :query-string "q=1"
      :headers {"content-type" "application/x-www-form-urlencoded"}
@@ -107,10 +107,10 @@
      :body (ByteArrayInputStream. (.getBytes "f=1"))}
     (impl-params)
     (select-keys [:query-params :body-params]))
-;             Execution time mean : 1.232769 µs
-;    Execution time std-deviation : 67.237305 ns
-;   Execution time lower quantile : 1.122566 µs ( 2.5%)
-;   Execution time upper quantile : 1.297176 µs (97.5%)
+;             Execution time mean : 1.199134 µs
+;    Execution time std-deviation : 58.802694 ns
+;   Execution time lower quantile : 1.156433 µs ( 2.5%)
+;   Execution time upper quantile : 1.278958 µs (97.5%)
 
 (-> {:request-method :post :query-string "q=1"
      :headers {"content-type" "application/x-www-form-urlencoded"}

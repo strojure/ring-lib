@@ -42,19 +42,19 @@
                                   (-> body (io/read-all-bytes (header/extract-charset content-type))
                                       (form-decode))))))]
           (if (or query-params body-params)
-            (let [request-method (.valAt request :request-method)]
+            (let [request-method (.valAt request :request-method)
+                  form-params (cond (.equals :get request-method) query-params
+                                    (.equals :post request-method) body-params)]
               (zmap/with-map [m request]
                 (cond-> m
                   query-params
                   (-> (assoc :query-params query-params)
-                      (cond-> (.equals :get request-method)
-                              (assoc :form-params query-params))
                       (zmap/update :path-or-query-params #(perf/merge* (.deref ^IDeref query-params) %)))
                   body-params
                   (-> (dissoc :body)
-                      (assoc :body-params body-params)
-                      (cond-> (.equals :post request-method)
-                              (assoc :form-params query-params))))))
+                      (assoc :body-params body-params))
+                  form-params
+                  (-> (assoc :form-params form-params)))))
             request))))))
 
 ;;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
