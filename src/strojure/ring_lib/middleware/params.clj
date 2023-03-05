@@ -27,8 +27,21 @@
   - `:form-params` – a map of params of HTML forms in GET/POST request.
       - In GET request same as `:query-params`.
       - In POST request same as `:body-params`.
+
+  The `opts` argument define form decoding behavior:
+
+  - a configuration map with optional keys:
+      - `:array-name-fn` – a function `(fn [param-name] array-param-name)`.
+          + Returns param name for params which should be collected in vectors.
+          + Default is function returning `true` for names with suffix `[]`.
+      - `:param-key-fn` – a function `(fn [param-name] ...)`.
+          + Converts string name to another type i.e. keyword.
+          + Default is not defined.
+  - or custom reducing function `rf` instead of configuration map.
   "
-  {:added "1.0"}
+  {:arglists '([{:keys [array-name-fn, param-key-fn] :as opts}]
+               [rf])
+   :added "1.0"}
   [opts]
   (let [form-decode (codec/form-decode-fn opts)]
     (fn [^Associative request]
