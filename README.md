@@ -31,3 +31,9 @@ middleware.
 - Adds `:path-or-query-params` which contains params from URL but not body.
 - Does not add `:params` as merge of everything else because it is considered confusing.
 - Optimized for performance.
+
+## Benchmarks
+
+- [middleware.params](doc/benchmark/middleware_params.clj)
+- [util.codec](doc/benchmark/util_codec.clj)
+- [util.headers](doc/benchmark/util_headers.clj)
