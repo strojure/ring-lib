@@ -28,7 +28,7 @@
       - In GET request same as `:query-params`.
       - In POST request same as `:body-params`.
 
-  The `opts` argument define form decoding behavior:
+  The `opts` argument defines form decoding behavior:
 
   - a configuration map with optional keys:
       - `:vector-param-name-fn` – a function `(fn [param-name] vector-param-name)`.
