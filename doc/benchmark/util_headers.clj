@@ -7,9 +7,9 @@
 
 ;;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-;;## Extract charset
+;; ## Extract charset
 
-;;### Content-Type with charset
+;; ### Content-Type with charset
 
 (-> (request/content-type {:headers {"content-type" "application/x-www-form-urlencoded; charset=windows-1251"}})
     (header/extract-charset))
@@ -19,7 +19,7 @@
 :=> "windows-1251"
 ;
 
-;;### Content-Type without charset
+;; ### Content-Type without charset
 
 (-> (request/content-type {:headers {"content-type" "application/x-www-form-urlencoded"}})
     (header/extract-charset))
@@ -30,7 +30,7 @@
 :=> nil
 ;
 
-;;### No Content-Type
+;; ### No Content-Type
 
 (-> (request/content-type {:headers {}})
     (header/extract-charset))
@@ -43,9 +43,9 @@
 
 ;;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-;;## Test for "application/x-www-form-urlencoded" content type
+;; ## Test for "application/x-www-form-urlencoded" content type
 
-;;### Positive
+;; ### Positive
 
 (-> (request/content-type {:headers {"content-type" "application/x-www-form-urlencoded"}})
     (header/form-urlencoded?))
@@ -55,7 +55,7 @@
 :=> true
 ;Execution time mean : 39,191427 ns
 
-;;### Negative
+;; ### Negative
 
 (-> (request/content-type {:headers {"content-type" "application/json"}})
     (header/form-urlencoded?))
@@ -65,7 +65,7 @@
 :=> false
 ;Execution time mean : 28,851349 ns
 
-;;### No Content-Type header
+;; ### No Content-Type header
 
 (-> (request/content-type {:headers {}})
     (header/form-urlencoded?))
