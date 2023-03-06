@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Release date `UNRELEASED`
 
 - Add `:body-params` in non-POST request.
+- (feat api codec breaking) Rename `:param-key-fn` to `:param-name-fn`.
 
 ## `1.0.17-beta2`
 

@@ -49,21 +49,21 @@
       + Returns param name for params which should be collected in vectors.
       + Default is [[array-suffix-name]] which uses suffix `[]` in names.
 
-  - `:param-key-fn` – a function `(fn [param-name] ...)`.
+  - `:param-name-fn` – a function `(fn [param-name] ...)`.
       + Converts string name to another type i.e. keyword.
       + Default is not defined.
   "
   {:added "1.0"}
-  [{:keys [array-name-fn param-key-fn]
+  [{:keys [array-name-fn param-name-fn]
     :or {array-name-fn array-suffix-name}}]
   (fn
     ([] {})
     ([m] m)
     ([^Associative m k v]
      (if-let [kk (when array-name-fn (array-name-fn k))]
-       (let [kk (cond-> kk param-key-fn (param-key-fn))]
+       (let [kk (cond-> kk param-name-fn (param-name-fn))]
          (.assoc m kk (conj (.valAt m kk []) v)))
-       (.assoc m (cond-> k param-key-fn (param-key-fn)) v)))))
+       (.assoc m (cond-> k param-name-fn (param-name-fn)) v)))))
 
 (defn form-decode-fn
   "Returns function `(fn [s] params)` to convert params string (query string,
@@ -73,13 +73,13 @@
       + Returns param name for params which should be collected in vectors.
       + Default is [[array-suffix-name]] which uses suffix `[]` in names.
 
-  - `:param-key-fn` – a function `(fn [param-name] ...)`.
+  - `:param-name-fn` – a function `(fn [param-name] ...)`.
       + Converts string name to another type i.e. keyword.
       + Default is not defined.
 
   Accepts custom reducing function `rf` instead of `opts` map.
   "
-  {:arglists '([{:keys [array-name-fn, param-key-fn]}]
+  {:arglists '([{:keys [array-name-fn, param-name-fn]}]
                [rf])
    :added "1.0"}
   [opts]

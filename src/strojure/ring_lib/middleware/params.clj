@@ -34,12 +34,12 @@
       - `:array-name-fn` – a function `(fn [param-name] array-param-name)`.
           + Returns param name for params which should be collected in vectors.
           + Default is function returning `true` for names with suffix `[]`.
-      - `:param-key-fn` – a function `(fn [param-name] ...)`.
+      - `:param-name-fn` – a function `(fn [param-name] ...)`.
           + Converts string name to another type i.e. keyword.
           + Default is not defined.
   - or custom reducing function `rf` instead of configuration map.
   "
-  {:arglists '([{:keys [array-name-fn, param-key-fn] :as opts}]
+  {:arglists '([{:keys [array-name-fn, param-name-fn] :as opts}]
                [rf])
    :added "1.0"}
   [opts]
