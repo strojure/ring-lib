@@ -26,10 +26,10 @@
       :else
       (-> result (rf (URLDecoder/decode s StandardCharsets/UTF_8) "")))))
 
-(defn array-suffix-name
-  "Default implementation of `:array-name-fn` in [[assoc-param-fn]]. Returns
-  param name without suffix `[]` or `nil` if `s` does not end with `[]`. Used to
-  collect only parameters with `[]` in vectors."
+(defn vector-param-name-suffix
+  "Default implementation of `:vector-param-name-fn` in [[assoc-param-rf]].
+  Returns param name without suffix `[]` or `nil` if `s` does not end with `[]`.
+  Used to collect only parameters with `[]` in vectors."
   {:added "1.0"}
   [^String s]
   (when (.endsWith s "[]")
@@ -37,30 +37,30 @@
                       (unchecked-subtract-int (.length s) (unchecked-int 2))))))
 
 (comment
-  (array-suffix-name "a")
-  (array-suffix-name "a[]")
+  (vector-param-name-suffix "a")
+  (vector-param-name-suffix "a[]")
   )
 
 (defn assoc-param-rf
   "Returns reducing function `(fn [m k v])` to collect sequence of parameters in
   map. Configuration options:
 
-  - `:array-name-fn` – a function `(fn [param-name] array-param-name)`.
+  - `:vector-param-name-fn` – a function `(fn [param-name] vector-param-name)`.
       + Returns param name for params which should be collected in vectors.
-      + Default is [[array-suffix-name]] which uses suffix `[]` in names.
+      + Default is [[vector-param-name-suffix]] which uses suffix `[]` in names.
 
   - `:param-name-fn` – a function `(fn [param-name] ...)`.
       + Converts string name to another type i.e. keyword.
       + Default is not defined.
   "
   {:added "1.0"}
-  [{:keys [array-name-fn param-name-fn]
-    :or {array-name-fn array-suffix-name}}]
+  [{:keys [vector-param-name-fn, param-name-fn]
+    :or {vector-param-name-fn, vector-param-name-suffix}}]
   (fn
     ([] {})
     ([m] m)
     ([^Associative m k v]
-     (if-let [kk (when array-name-fn (array-name-fn k))]
+     (if-let [kk (when vector-param-name-fn (vector-param-name-fn k))]
        (let [kk (cond-> kk param-name-fn (param-name-fn))]
          (.assoc m kk (conj (.valAt m kk []) v)))
        (.assoc m (cond-> k param-name-fn (param-name-fn)) v)))))
@@ -69,9 +69,9 @@
   "Returns function `(fn [s] params)` to convert params string (query string,
   form params) to persistent map. Configuration options:
 
-  - `:array-name-fn` – a function `(fn [param-name] array-param-name)`.
+  - `:vector-param-name-fn` – a function `(fn [param-name] vector-param-name)`.
       + Returns param name for params which should be collected in vectors.
-      + Default is [[array-suffix-name]] which uses suffix `[]` in names.
+      + Default is [[vector-param-name-suffix]] which uses suffix `[]` in names.
 
   - `:param-name-fn` – a function `(fn [param-name] ...)`.
       + Converts string name to another type i.e. keyword.
@@ -79,7 +79,7 @@
 
   Accepts custom reducing function `rf` instead of `opts` map.
   "
-  {:arglists '([{:keys [array-name-fn, param-name-fn]}]
+  {:arglists '([{:keys [vector-param-name-fn, param-name-fn]}]
                [rf])
    :added "1.0"}
   [opts]

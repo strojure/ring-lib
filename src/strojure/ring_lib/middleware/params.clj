@@ -31,7 +31,7 @@
   The `opts` argument define form decoding behavior:
 
   - a configuration map with optional keys:
-      - `:array-name-fn` – a function `(fn [param-name] array-param-name)`.
+      - `:vector-param-name-fn` – a function `(fn [param-name] vector-param-name)`.
           + Returns param name for params which should be collected in vectors.
           + Default is function returning `true` for names with suffix `[]`.
       - `:param-name-fn` – a function `(fn [param-name] ...)`.
@@ -39,7 +39,7 @@
           + Default is not defined.
   - or custom reducing function `rf` instead of configuration map.
   "
-  {:arglists '([{:keys [array-name-fn, param-name-fn] :as opts}]
+  {:arglists '([{:keys [vector-param-name-fn, param-name-fn] :as opts}]
                [rf])
    :added "1.0"}
   [opts]
