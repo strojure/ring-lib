@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Release date `UNRELEASED`
 
 - (feat api): Add middleware builder functions.
+- (feat api): Add `cookies` middleware.
 
 ## `1.0.33`
 

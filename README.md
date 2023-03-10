@@ -27,6 +27,15 @@ namespace:
     (mw/wrap-request (params/params-request-fn {})))
 ```
 
+#### cookies
+
+The alternative implementation of the
+[cookies](https://github.com/ring-clojure/ring/blob/master/ring-core/src/ring/middleware/cookies.clj)
+middleware.
+
+- Lazy evaluation of the `:cookies` key in request.
+- Avoids destructuring of the options map in every request.
+
 #### params
 
 The alternative implementation of the
