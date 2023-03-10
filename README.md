@@ -8,7 +8,7 @@ Opinionated implementations for Clojure ring handler.
 
 ## Motivation
 
-Being not satisfied with come decisions/implementations in existing Ring
+Being not satisfied with some decisions/implementations in existing Ring
 libraries.
 
 ## API
