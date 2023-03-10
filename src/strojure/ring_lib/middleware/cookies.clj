@@ -24,6 +24,7 @@
   key. A cookie may optionally contain a `:path`, `:domain` or `:port`
   attribute.
   "
+  {:added "1.1"}
   [{:keys [decoder] :or {decoder codec/form-decode-str}}]
   (fn [^Associative request]
     (when request
@@ -77,6 +78,7 @@
   - `:same-site` – set to `:strict` or `:lax` to set SameSite attribute of the
                    cookie
   "
+  {:added "1.1"}
   [{:keys [encoder] :or {encoder codec/form-encode}}]
   (fn cookies-response
     ([response _request] (cookies-response response))
