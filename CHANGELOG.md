@@ -4,15 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## `1.0.34-SNAPSHOT`
+## `1.1.0-SNAPSHOT`
 
 Release date `UNRELEASED`
 
-
+- (feat api): Add middleware builder functions.
 
 ## `1.0.33`
 
-Release date `UNRELEASED`
+Release date `2023-03-09`
 
 - (chore): Change license to Unlicense.
 - (deps): Upgrade undertow "2.3.4.Final", zmap "1.3.26".

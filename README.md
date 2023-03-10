@@ -15,6 +15,18 @@ libraries.
 
 ### Middlewares
 
+The middlewares in this library does not provide `wrap-middleware` function.
+There are middleware builder functions in `strojure.ring-lib.middleware.core`
+namespace:
+
+```clojure
+(require '[strojure.ring-lib.middleware.core :as mw]
+         '[strojure.ring-lib.middleware.params :as params])
+
+(-> handler
+    (mw/wrap-request (params/params-request-fn {})))
+```
+
 #### params
 
 The alternative implementation of the
