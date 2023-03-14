@@ -71,3 +71,9 @@ middleware.
 - [middleware.params](doc/benchmark/middleware_params.clj)
 - [util.codec](doc/benchmark/util_codec.clj)
 - [util.headers](doc/benchmark/util_headers.clj)
+
+---
+
+Written by [Sergey Trofimov](https://github.com/serioga).
+
+[![license](https://img.shields.io/badge/license-The%20Unlicense-informational)](UNLICENSE)
