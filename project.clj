@@ -1,4 +1,4 @@
-(defproject com.github.strojure/ring-lib "1.2.0-SNAPSHOT"
+(defproject com.github.strojure/ring-lib "1.2.0-44-alpha1"
   :description "Opinionated implementations for Clojure ring handler."
   :url "https://github.com/strojure/ring-lib"
   :license {:name "The Unlicense" :url "https://unlicense.org"}
