@@ -1,4 +1,4 @@
-(defproject com.github.strojure/ring-lib "1.1.1-SNAPSHOT"
+(defproject com.github.strojure/ring-lib "1.2.0-SNAPSHOT"
   :description "Opinionated implementations for Clojure ring handler."
   :url "https://github.com/strojure/ring-lib"
   :license {:name "The Unlicense" :url "https://unlicense.org"}
@@ -8,7 +8,9 @@
                  ;; Request utils from undertow
                  [io.undertow/undertow-core "2.3.4.Final"]
                  ;; Reuse standard ring implementations
-                 [ring/ring-core "1.9.6"]]
+                 [ring/ring-core "1.9.6"]
+                 ;; Use web-security implementations
+                 [com.github.strojure/web-security "0.2.1-22"]]
 
   :profiles {:provided {:dependencies [[org.clojure/clojure "1.11.1"]]}
              :dev,,,,, {:dependencies [[ring/ring-defaults "0.3.4"]]

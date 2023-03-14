@@ -27,6 +27,17 @@ namespace:
     (mw/wrap-request (params/params-request-fn {})))
 ```
 
+#### csp
+
+The implementation of Content Security Policy ([CSP]).
+
+- Supports static CSP headers and headers with nonce.
+- Renders policy from Clojure map.
+- Follows recommendations for nonce generation.
+- Configurable usage of report-only CSP header.
+
+[CSP]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+
 #### cookies
 
 The alternative implementation of the
