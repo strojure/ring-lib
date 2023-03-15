@@ -36,6 +36,7 @@ The implementation of Content Security Policy ([CSP]).
 - Renders policy from Clojure map.
 - Follows recommendations for nonce generation.
 - Configurable usage of report-only CSP header.
+- Handles report URI endpoint.
 
 [CSP]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
 

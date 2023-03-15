@@ -8,11 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Release date `UNRELEASED`
 
+- (feat api): Add `csp/wrap-report-uri` middleware.
+
 ## `1.2.0-44-alpha1`
 
 Release date `2023-03-14`
 
-- (feat api): Add `csp` middleware.
+- (feat api): Add `csp/wrap-csp` middleware.
 
 ## `1.1.0-39`
 
