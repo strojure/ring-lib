@@ -74,6 +74,6 @@ middleware.
 
 ---
 
-Written by [Sergey Trofimov](https://github.com/serioga).
+Authored by [Sergey Trofimov](https://github.com/serioga).
 
 [![license](https://img.shields.io/badge/license-The%20Unlicense-informational)](UNLICENSE)
