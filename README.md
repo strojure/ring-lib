@@ -16,7 +16,7 @@ libraries.
 
 ### Middlewares
 
-The middlewares in this library does not provide `wrap-middleware` function.
+Some middlewares in this library does not provide `wrap-middleware` function.
 There are middleware builder functions in `strojure.ring-lib.middleware.core`
 namespace:
 
