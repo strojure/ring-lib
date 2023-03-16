@@ -10,7 +10,7 @@ Release date `UNRELEASED`
 
 ## `1.2.1-55`
 
-Release date `UNRELEASED`
+Release date `2023-03-16`
 
 - (feat): Keep `nil` response intact in `csp/wrap-csp` middleware.
 
