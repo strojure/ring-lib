@@ -104,27 +104,27 @@
         (fn nonce-csp
           ([request]
            (let [nonce (nonce-fn)]
-             (-> (handler (assoc request :csp-nonce nonce))
-                 (update :headers assoc header-name (header-value-fn nonce)))))
+             (some-> (handler (assoc request :csp-nonce nonce))
+                     (update :headers assoc header-name (header-value-fn nonce)))))
           ([request respond raise]
            (try
              (let [nonce (nonce-fn)
                    header-value (header-value-fn nonce)]
                (handler (assoc request :csp-nonce nonce)
                         (fn [response]
-                          (respond (update response :headers assoc header-name header-value)))
+                          (respond (some-> response (update :headers assoc header-name header-value))))
                         raise))
              (catch Throwable t (raise t)))))
         (fn static-csp
           ([request]
-           (-> (handler request)
-               (update :headers assoc header-name (header-value-fn))))
+           (some-> (handler request)
+                   (update :headers assoc header-name (header-value-fn))))
           ([request respond raise]
            (try
              (let [header-value (header-value-fn)]
                (handler request
                         (fn [response]
-                          (respond (update response :headers assoc header-name header-value)))
+                          (respond (some-> response (update :headers assoc header-name header-value))))
                         raise))
              (catch Throwable t (raise t))))))
       report-callback

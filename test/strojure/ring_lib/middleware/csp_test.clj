@@ -40,10 +40,10 @@
 ;;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 (defn- wrap-csp*
-  [opts]
+  [{:keys [::handler] :as opts}]
   (let [opts (assoc opts :random-nonce-fn (constantly "TEST-NONCE"))
-        handler (-> (fn [request]
-                      {:body (select-keys request [:scp-nonce])})
+        handler (-> (or handler (fn [request]
+                                  {:body (select-keys request [:scp-nonce])}))
                     (csp/wrap-csp opts))]
     (handler {})))
 
@@ -89,6 +89,14 @@
 
     (test/is (not= (class (csp/wrap-report-uri identity {:report-callback identity}))
                    (class (csp/wrap-csp identity {:policy {}}))))
+
+    )
+
+  (testing "no headers in `nil` response"
+
+    (test/is (= nil
+                (wrap-csp* {:policy {:default-src :none}
+                            ::handler (constantly nil)})))
 
     )
 

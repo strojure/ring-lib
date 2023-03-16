@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Release date `UNRELEASED`
 
+- (feat): Keep `nil` response intact in `csp/wrap-csp` middleware.
+
 ## `1.2.0-52`
 
 Release date `2013-03-15`
