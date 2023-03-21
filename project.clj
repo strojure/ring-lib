@@ -10,7 +10,7 @@
                  ;; Reuse standard ring implementations
                  [ring/ring-core "1.9.6"]
                  ;; Use web-security implementations
-                 [com.github.strojure/web-security "1.0.0-28"]]
+                 [com.github.strojure/web-security "1.1.0-32"]]
 
   :profiles {:provided {:dependencies [[org.clojure/clojure "1.11.1"]]}
              :dev,,,,, {:dependencies [[ring/ring-defaults "0.3.4"]]

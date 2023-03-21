@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Release date `UNRELEASED`
 
+- (deps): upgrade strojure/web-security "1.1.0-32"
+
 ## `1.2.1-55`
 
 Release date `2023-03-16`
