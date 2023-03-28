@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## `1.2.3-60-SNAPSHOT`
+## `1.2.4-63-SNAPSHOT`
 
 Release date `UNRELEASED`
+
+## `1.2.3-62`
+
+Release date `2023-03-28`
 
 - (deps): upgrade strojure/web-security "1.2.0-38", undertow "2.3.5.Final"
     + (feat): generating CSP nonce changed from 18 to 16 bytes, URL encoded
